@@ -1,9 +1,9 @@
 import { useCartContext } from '@/contexts/CartContext'
-import { Products } from '@/types/product'
+import { ProductType } from '@/types/product'
 import { Trash2 } from 'lucide-react'
 
 type PropType = {
-	item: Products
+	item: ProductType
 }
 
 const AddToCartCard = ({ item }: PropType) => {
@@ -82,7 +82,7 @@ const AddToCartCard = ({ item }: PropType) => {
 				<p>₹{totalPrice * 87}</p>
 
 				<button onClick={removeCartHandler}>
-					<Trash2 />
+					<Trash2 className='hover:text-red-600' />
 				</button>
 			</div>
 		</div>

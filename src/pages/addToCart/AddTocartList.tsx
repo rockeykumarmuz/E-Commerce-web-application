@@ -1,9 +1,9 @@
-import { Products } from '@/types/product'
+import { ProductType } from '@/types/product'
 import AddToCartCard from '../components/AddToCartCard'
 import { useCartContext } from '@/contexts/CartContext'
 
 type Props = {
-	cartItems: Products[]
+	cartItems: ProductType[]
 }
 
 const AddTocartList = ({ cartItems }: Props) => {
@@ -22,15 +22,19 @@ const AddTocartList = ({ cartItems }: Props) => {
 			{!cartItems ? (
 				<p>No Item availale in the Cart.</p>
 			) : (
-				cartItems?.map((item: Products) => {
+				cartItems?.map((item: ProductType) => {
 					return <AddToCartCard key={item.id} item={item} />
 				})
 			)}
 			{/* code for total price of the cart itmes */}
-			<hr className='pb-4' />
-			<div className='flex justify-end'>
-				<p className='text-md font-bold'>Total Price: ₹{totalProductPrice * 87}</p>
-			</div>
+			{totalProductPrice > 0 ?(
+				<>
+					<hr className='pb-4' />
+					<div className='flex justify-end'>
+						<p className='text-md font-bold'>Total Price: ₹{totalProductPrice * 87}</p>
+					</div>
+				</>
+			) : <p className='text-center font-bold p-2'>No Products are added to cart.</p>}
 		</div>
 	)
 }

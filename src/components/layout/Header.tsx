@@ -17,10 +17,12 @@ const Header = () => {
 	})
 
 	return (
-		<header className='bg-blue-400 sticky top-0 z-10'>
+		<header className='bg-indigo-700 sticky top-0 z-10'>
 			<nav className='max-w-[1170px] mx-auto flex justify-between items-center py-[1rem]'>
 				<div className='w-[100%] flex items-center justify-start ml-6'>
-					<h2 className='text-white text-2xl foont-extrabold hover:cursor-pointer' onClick={() => navigate('/products')}>
+					<h2
+						className='text-white text-2xl foont-extrabold hover:cursor-pointer'
+						onClick={() => navigate('/products')}>
 						Shopping Verse
 					</h2>
 
@@ -33,7 +35,7 @@ const Header = () => {
 								Category
 							</option>
 							{getProductListQuery.isSuccess &&
-								getProductListQuery?.data?.categories?.map?.((category: string) => {
+								getProductListQuery?.data?.map?.((category: string) => {
 									return (
 										<>
 											<option value={category} key={category}>

@@ -1,10 +1,10 @@
 import useProductDetails from '@/hooks/prodcuts/useProductDetails'
-import { Products } from '@/types/product'
 import { useQuery } from '@tanstack/react-query'
 import ProductCard from './components/ProductCard'
 import { useNavigate } from 'react-router'
 import { useFilterContext } from '@/contexts/FilterContext'
 import useDebounce from '@/hooks/prodcuts/useDebounce'
+import { ProductType } from '@/types/product'
 
 const ProductList = () => {
 	const { getAllProducts, getProductsSpecificCategory } = useProductDetails()
@@ -21,8 +21,8 @@ const ProductList = () => {
 	})
 
 	const getProductCategoryQuery = useQuery({
-		queryKey: ['products', 'category?type=' + selectedOption],
-		queryFn: () => getProductsSpecificCategory('?type=' + selectedOption),
+		queryKey: ['products', 'category' + selectedOption],
+		queryFn: () => getProductsSpecificCategory(selectedOption),
 		enabled: selectedOption.length > 1,
 	})
 
@@ -36,7 +36,7 @@ const ProductList = () => {
 	// Clean the search input (optional: remove unwanted characters, trim)
 	const cleanedSearchInput = debouncedSearchInput.trim().toLowerCase()
 
-	const filteredProducts = getProductListQuery?.data?.products?.filter((product: Products) => {
+	const filteredProducts = getProductListQuery?.data?.filter((product: ProductType) => {
 		// product.title.toLowerCase().includes(searchInput.toLowerCase())
 
 		const productTitle = product?.title?.toLowerCase()
@@ -48,13 +48,13 @@ const ProductList = () => {
 	if (getProductCategoryQuery.isLoading) return <div className='flex items-center  justify-center'>Loading...</div>
 
 	return (
-		<div className='grid md:grid-cols-4 grid-cols-2 xs:grid-cols-1  max-w-[1170px] mx-auto gap-4 box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25) mt-4'>
+		<div className='grid md:grid-cols-4 grid-cols-2 xs:grid-cols-1  max-w-[1170px] mx-auto gap-1 box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25) mt-4'>
 			{selectedOption.length < 1 &&
-				filteredProducts?.map((product: Products) => {
+				filteredProducts?.map((product: ProductType) => {
 					return <ProductCard key={product.id} product={product} onProductClick={handleSingleProductDetail} />
 				})}
 
-			{getProductCategoryQuery?.data?.products.map((product: Products) => {
+			{getProductCategoryQuery?.data?.map((product: ProductType) => {
 				return <ProductCard key={product.id} product={product} onProductClick={handleSingleProductDetail} />
 			})}
 		</div>

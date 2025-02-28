@@ -1,6 +1,6 @@
 import { useCartContext } from '@/contexts/CartContext'
 import useProductDetails from '@/hooks/prodcuts/useProductDetails'
-import { Products } from '@/types/product'
+import { ProductType } from '@/types/product'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate, useParams } from 'react-router'
 
@@ -22,14 +22,14 @@ const ProductDetailCard = () => {
 		staleTime: Infinity,
 	})
 
-	const handleCartPageRedirect = (product: Products) => {
+	const handleCartPageRedirect = (product: ProductType) => {
 		addToCart(product)
 		navigate('/addToCart')
 	}
 
 	if (getSingleProductDetailsQeury.isLoading) return <div className='flex items-center  justify-center'>Loading...</div>
 
-	const product = getSingleProductDetailsQeury?.data?.product as Products
+	const product = getSingleProductDetailsQeury?.data as ProductType
 
 	return (
 		<div className='max-w-[1170px] grid sm:grid-cols-[40%_auto] grid-cols-1 sm:mx-auto mx-[1rem] mt-4 gap-8'>
@@ -79,15 +79,15 @@ const ProductDetailCard = () => {
 				<div className='grid sm:grid-cols-4 grid-cols-2 sm:gap-3 gap:4'>
 					<div className='mt-2'>
 						<p className='text-gray-500'>Brand</p>
-						<p className='font-medium'>{product.brand}</p>
+						<p className='font-medium'>{product.category}</p>
 					</div>
 					<div className='mt-2'>
 						<p className='text-gray-500'>Model</p>
-						<p className='font-medium'>{product.model}</p>
+						<p className='font-medium'>{product.category}</p>
 					</div>
 					<div className='mt-2'>
 						<p className='text-gray-500'>Color</p>
-						<p className='font-medium'>{product.color}</p>
+						<p className='font-medium'>{product.category}</p>
 					</div>
 					<div className='mt-2'>
 						<p className='text-gray-500'>Category</p>
@@ -97,12 +97,12 @@ const ProductDetailCard = () => {
 
 				<div className='font-semibold text-[#388e3c] mt-[12px] text-sm'>Special Price</div>
 				<div className='flex flex-row gap-3'>
-					<div className='font-bold'>₹{getSpecialDiscountedPrice(product.price, product.discount)}</div>
+					<div className='font-bold'>₹{getSpecialDiscountedPrice(product.price, product.id)}</div>
 					<div className='text-gray-500 pt-[6px] text-sm'>
 						<s>₹{product.price * 100}</s>
 					</div>
 					<div className='text-[#388e3c] pt-[6px] text-sm font-bold'>
-						{product.discount}
+						{product.category}
 						<span className='text-[#388e3c]'>% off</span>
 					</div>
 				</div>

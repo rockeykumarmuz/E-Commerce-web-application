@@ -1,11 +1,11 @@
-import { Products } from '@/types/product'
+import { ProductType } from '@/types/product'
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from 'react'
 
 export type CartContextType = {
-	cartItems: Products[]
-	addToCart: (product: Products) => void
+	cartItems: ProductType[]
+	addToCart: (product: ProductType) => void
 	removeFromCart: (productId: number) => void
-	setCartItems: Dispatch<SetStateAction<Products[]>>
+	setCartItems: Dispatch<SetStateAction<ProductType[]>>
 	quantities: { [key: string]: number }
 	setQuantities: Dispatch<SetStateAction<{ [key: string]: number }>>
 }
@@ -17,12 +17,12 @@ type CartProviderProps = {
 }
 
 export const CartProvider = ({ children }: CartProviderProps) => {
-	const [cartItems, setCartItems] = useState<Products[]>([])
+	const [cartItems, setCartItems] = useState<ProductType[]>([])
 	const [quantities, setQuantities] = useState<{ [key: string]: number }>({})
 
-	const addToCart = (product: Products) => {
+	const addToCart = (product: ProductType) => {
 		if (cartItems.length > 0) {
-			cartItems.find((item: Products) => item.id !== product.id) ? setCartItems(prev => [...prev, product]) : null
+			cartItems.find((item: ProductType) => item.id !== product.id) ? setCartItems(prev => [...prev, product]) : null
 			return <p className='bg-green-500 text-white border-[1px] p-3'>Items are already added to cart</p>
 		}
 		setCartItems(prev => [...prev, product])
