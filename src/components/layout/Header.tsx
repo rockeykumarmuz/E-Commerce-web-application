@@ -3,6 +3,7 @@ import { ShoppingCart } from 'lucide-react'
 import useProductDetails from '@/hooks/prodcuts/useProductDetails'
 import { useQuery } from '@tanstack/react-query'
 import { useFilterContext } from '@/contexts/FilterContext'
+import { CategoryType } from '@/types/product'
 
 const Header = () => {
 	const { searchInput, setSearchInput, selectedOption, setSelectedOption } = useFilterContext()
@@ -11,7 +12,7 @@ const Header = () => {
 	const { getAllCategory } = useProductDetails()
 
 	const getProductListQuery = useQuery({
-		queryKey: ['category'],
+		queryKey: ['products', 'category'],
 		queryFn: getAllCategory,
 		staleTime: Infinity,
 	})
@@ -35,11 +36,11 @@ const Header = () => {
 								Category
 							</option>
 							{getProductListQuery.isSuccess &&
-								getProductListQuery?.data?.map?.((category: string) => {
+								getProductListQuery?.data?.map?.((category: CategoryType) => {
 									return (
 										<>
-											<option value={category} key={category}>
-												{category}
+											<option value={category.name} key={category.slug}>
+												{category.name}
 											</option>
 										</>
 									)

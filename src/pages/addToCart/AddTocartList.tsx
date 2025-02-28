@@ -9,7 +9,10 @@ type Props = {
 const AddTocartList = ({ cartItems }: Props) => {
 	const { quantities } = useCartContext()
 
-	const totalProductPrice = cartItems.reduce((ele, product) => ele + product.price * (quantities[product.id] || 1), 0)
+	const totalProductPrice = cartItems.reduce(
+		(ele, product) => ele + Math.round(product.price) * (quantities[product.id] || 1),
+		0
+	)
 
 	return (
 		<div className='max-w-[1170px] mx-auto'>
@@ -27,14 +30,16 @@ const AddTocartList = ({ cartItems }: Props) => {
 				})
 			)}
 			{/* code for total price of the cart itmes */}
-			{totalProductPrice > 0 ?(
+			{totalProductPrice > 0 ? (
 				<>
 					<hr className='pb-4' />
 					<div className='flex justify-end'>
-						<p className='text-md font-bold'>Total Price: ₹{totalProductPrice * 87}</p>
+						<p className='text-md font-bold'>Total Price: ₹{Math.round(totalProductPrice * 87)}</p>
 					</div>
 				</>
-			) : <p className='text-center font-bold p-2'>No Products are added to cart.</p>}
+			) : (
+				<p className='text-center font-bold p-2'>No Products are added to cart.</p>
+			)}
 		</div>
 	)
 }

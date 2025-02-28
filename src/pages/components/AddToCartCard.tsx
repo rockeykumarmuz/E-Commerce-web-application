@@ -47,13 +47,13 @@ const AddToCartCard = ({ item }: PropType) => {
 			<div className='grid sm:grid-cols-5 grid-cols-1 gap-8 items-center'>
 				<div className='grid grid-cols-2 items-center'>
 					<div className='w-[70px]'>
-						<img src={item.image} alt='xs' className='w-[100%] h-[70px] object-cover mb-2' />
+						<img src={item.thumbnail} alt='xs' className='w-[100%] h-[70px] object-cover mb-2' />
 					</div>
 					<p className='' title={item.title}>
 						{item.title.slice(0, 20) + '...'}
 					</p>
 				</div>
-				<p> ${item.price}</p>
+				<p> ${Math.round(item.price)}</p>
 
 				{/* codes for the items to increase or decrease the quantity */}
 				<div className='items-center'>
@@ -79,7 +79,7 @@ const AddToCartCard = ({ item }: PropType) => {
 						</button>
 					</div>
 				</div>
-				<p>₹{totalPrice * 87}</p>
+				<p>₹{Math.round(totalPrice * 87)}</p>
 
 				<button onClick={removeCartHandler}>
 					<Trash2 className='hover:text-red-600' />

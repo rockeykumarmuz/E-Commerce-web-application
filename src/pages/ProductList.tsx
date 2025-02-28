@@ -36,7 +36,7 @@ const ProductList = () => {
 	// Clean the search input (optional: remove unwanted characters, trim)
 	const cleanedSearchInput = debouncedSearchInput.trim().toLowerCase()
 
-	const filteredProducts = getProductListQuery?.data?.filter((product: ProductType) => {
+	const filteredProducts = getProductListQuery?.data?.products?.filter((product: ProductType) => {
 		// product.title.toLowerCase().includes(searchInput.toLowerCase())
 
 		const productTitle = product?.title?.toLowerCase()
@@ -54,7 +54,7 @@ const ProductList = () => {
 					return <ProductCard key={product.id} product={product} onProductClick={handleSingleProductDetail} />
 				})}
 
-			{getProductCategoryQuery?.data?.map((product: ProductType) => {
+			{getProductCategoryQuery?.data?.products?.map((product: ProductType) => {
 				return <ProductCard key={product.id} product={product} onProductClick={handleSingleProductDetail} />
 			})}
 		</div>

@@ -34,7 +34,7 @@ const ProductDetailCard = () => {
 	return (
 		<div className='max-w-[1170px] grid sm:grid-cols-[40%_auto] grid-cols-1 sm:mx-auto mx-[1rem] mt-4 gap-8'>
 			<div className=' mx-auto'>
-				<img src={product.image} alt={product.title} className='border-[1px] rounded-md  m-3' />
+				<img src={product.thumbnail} alt={product.title} className='border-[1px] rounded-md  m-3' loading='lazy' />
 				<div className='flex items-center justify-between m-3' onClick={() => handleCartPageRedirect(product)}>
 					<button className='border-[1px] py-3 rounded-md px-6 ml-3'>
 						<svg width='33' height='27' viewBox='0 0 33 27' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -97,9 +97,9 @@ const ProductDetailCard = () => {
 
 				<div className='font-semibold text-[#388e3c] mt-[12px] text-sm'>Special Price</div>
 				<div className='flex flex-row gap-3'>
-					<div className='font-bold'>₹{getSpecialDiscountedPrice(product.price, product.id)}</div>
+					<div className='font-bold'>₹{Math.round(getSpecialDiscountedPrice(product.price, product.id))}</div>
 					<div className='text-gray-500 pt-[6px] text-sm'>
-						<s>₹{product.price * 100}</s>
+						<s>₹{Math.round(product.price)}</s>
 					</div>
 					<div className='text-[#388e3c] pt-[6px] text-sm font-bold'>
 						{product.category}

@@ -15,7 +15,8 @@ const useProductDetails = () => {
 	}
 
 	const getProductsSpecificCategory = async (category: string) => {
-		const response = await axios.get(GET_SPECIFIC_CATEGORY_PRODUCTS + category)
+		const payload = category.replace(/\s/g, '-')
+		const response = await axios.get(GET_SPECIFIC_CATEGORY_PRODUCTS + payload)
 		return response.data
 	}
 
