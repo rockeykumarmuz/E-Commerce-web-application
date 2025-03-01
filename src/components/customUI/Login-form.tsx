@@ -8,7 +8,6 @@ import useAuth from '@/hooks/users/useAuth'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from 'react-router'
-import { json } from 'stream/consumers'
 
 const signUpSchema = z.object({
 	username: z.string().min(3, 'Please enter valid username'),
