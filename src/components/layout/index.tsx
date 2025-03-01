@@ -2,7 +2,7 @@ import { Outlet } from 'react-router'
 import Header from './Header'
 import Footer from './Footer'
 
-const PageLayOut = () => {
+const PageLayout = () => {
 	return (
 		<div>
 			<Header />
@@ -12,4 +12,4 @@ const PageLayOut = () => {
 	)
 }
 
-export default PageLayOut
+export default PageLayout

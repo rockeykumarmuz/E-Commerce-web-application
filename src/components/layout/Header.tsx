@@ -4,10 +4,23 @@ import useProductDetails from '@/hooks/prodcuts/useProductDetails'
 import { useQuery } from '@tanstack/react-query'
 import { useFilterContext } from '@/contexts/FilterContext'
 import { CategoryType } from '@/types/product'
+import { useEffect, useState } from 'react'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 
 const Header = () => {
 	const { searchInput, setSearchInput, selectedOption, setSelectedOption } = useFilterContext()
 	const navigate = useNavigate()
+	const [profile, setProfile] = useState('')
+
+	useEffect(() => {
+		const profileUrl = localStorage.getItem('userProfileImage')!
+		console.log(profileUrl)
+		if (profile) {
+			setProfile(profileUrl)
+		}
+	}, [])
+
+	console.log('profile url hai ', profile)
 
 	const { getAllCategory } = useProductDetails()
 
@@ -61,6 +74,15 @@ const Header = () => {
 							<ShoppingCart />
 							Cart
 						</Link>
+					</li>
+				</ul>
+
+				<ul>
+					<li>
+						<Avatar>
+							<AvatarImage src='https://dummyjson.com/icon/emilys/128' className='bg-red-400' />
+							<AvatarFallback>Profile Image</AvatarFallback>
+						</Avatar>
 					</li>
 				</ul>
 			</nav>

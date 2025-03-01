@@ -23,7 +23,7 @@ const ProductCard = ({ product, onProductClick }: PropType) => {
 			<p title={product.description} className='text-sm pb-2'>
 				{product.description.slice(0, 60)}...
 			</p>
-			<p className='text-md  items-end font-bold'>Rs. {Math.round(product.price)}</p>
+			<p className='text-md  items-end font-bold'>Rs. {Math.round(product.price*87)}</p>
 		</div>
 	)
 }

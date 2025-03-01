@@ -7,6 +7,8 @@ import { z } from 'zod'
 import useAuth from '@/hooks/users/useAuth'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useNavigate } from 'react-router'
+import { json } from 'stream/consumers'
 
 const signUpSchema = z.object({
 	username: z.string().min(3, 'Please enter valid username'),
@@ -17,6 +19,7 @@ export type SignUpFormValues = z.infer<typeof signUpSchema>
 
 export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
 	const { loginUser } = useAuth()
+	const navigate = useNavigate()
 	const methods = useForm<SignUpFormValues>({
 		defaultValues: {
 			username: '',
@@ -26,14 +29,19 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 	})
 
 	const handleFormSubmit = async (data: SignUpFormValues) => {
-		console.log('ye data hai ', methods.getValues('username'))
 		const payload = {
 			username: data.username,
 			password: data.password,
 		}
-		const response = await loginUser(payload)
-		methods.reset()
-		return response.data
+		try {
+			const response = await loginUser(payload)
+			localStorage.setItem('userInfo', JSON.stringify(response))
+			methods.reset()
+			localStorage.setItem('userImage', response.image)
+			navigate('/products')
+		} catch (error) {
+			console.log('Invalid Credentials')
+		}
 	}
 
 	return (
