@@ -8,6 +8,7 @@ import useAuth from '@/hooks/users/useAuth'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from 'react-router'
+import { useEffect } from 'react'
 
 const signUpSchema = z.object({
 	username: z.string().min(3, 'Please enter valid username'),
@@ -19,6 +20,15 @@ export type SignUpFormValues = z.infer<typeof signUpSchema>
 export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
 	const { loginUser } = useAuth()
 	const navigate = useNavigate()
+
+	// Check if user is already logged in
+	useEffect(() => {
+		const userInfo = localStorage.getItem('userInfo')
+		if (userInfo) {
+			navigate('/products') // Redirect to products if logged in
+		}
+	}, [navigate])
+
 	const methods = useForm<SignUpFormValues>({
 		defaultValues: {
 			username: '',
@@ -84,7 +94,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 								<div className='text-center text-sm'>
 									Don&apos;t have an account?{' '}
 									<a href='#' className='underline underline-offset-4'>
-										Login
+										Sign up
 									</a>
 								</div>
 							</div>

@@ -4,23 +4,17 @@ import useProductDetails from '@/hooks/prodcuts/useProductDetails'
 import { useQuery } from '@tanstack/react-query'
 import { useFilterContext } from '@/contexts/FilterContext'
 import { CategoryType } from '@/types/product'
-import { useEffect, useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { useAuthContext } from '@/contexts/AuthContext'
+import { DropdownMenu } from '../ui/dropdown-menu'
+import { useState } from 'react'
+import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
 
 const Header = () => {
 	const { searchInput, setSearchInput, selectedOption, setSelectedOption } = useFilterContext()
 	const navigate = useNavigate()
-	const [profile, setProfile] = useState('')
-
-	useEffect(() => {
-		const profileUrl = localStorage.getItem('userProfileImage')!
-		console.log(profileUrl)
-		if (profile) {
-			setProfile(profileUrl)
-		}
-	}, [])
-
-	console.log('profile url hai ', profile)
+	const { userInfo } = useAuthContext()
+	const [isOpen, setIsOpen] = useState(false)
 
 	const { getAllCategory } = useProductDetails()
 
@@ -29,6 +23,19 @@ const Header = () => {
 		queryFn: getAllCategory,
 		staleTime: Infinity,
 	})
+
+	const toggleDropdown = () => {
+		setIsOpen(!isOpen)
+	}
+
+	const handleLogOut = () => {
+		localStorage.removeItem('userInfo')
+		navigate('/login')
+	}
+
+	const handleLogin = () => {
+		navigate('/login')
+	}
 
 	return (
 		<header className='bg-indigo-700 sticky top-0 z-10'>
@@ -77,14 +84,35 @@ const Header = () => {
 					</li>
 				</ul>
 
-				<ul>
-					<li>
-						<Avatar>
-							<AvatarImage src='https://dummyjson.com/icon/emilys/128' className='bg-red-400' />
-							<AvatarFallback>Profile Image</AvatarFallback>
-						</Avatar>
-					</li>
-				</ul>
+				{userInfo && (
+					<ul>
+						<li>
+							<DropdownMenu open={isOpen} onOpenChange={() => setIsOpen(!open)}>
+								<DropdownMenuTrigger asChild>
+									<li>
+										<Avatar className='hover: cursor-pointer' onClick={toggleDropdown}>
+											<AvatarImage src='' className='bg-red-400' />
+											<AvatarFallback className='font-bold'>
+												{userInfo?.firstName?.charAt(0).toUpperCase()}
+											</AvatarFallback>
+										</Avatar>
+									</li>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent className='bg-gray-50 w-[80px] h-auto p-2 rounded-md shadow-gray-50 m-2'>
+									{userInfo ? (
+										<DropdownMenuItem className='border-none outline-none hover:cursor-pointer' onClick={handleLogOut}>
+											Logout
+										</DropdownMenuItem>
+									) : (
+										<DropdownMenuItem className='border-none outline-none hover:cursor-pointer' onClick={handleLogin}>
+											Login
+										</DropdownMenuItem>
+									)}
+								</DropdownMenuContent>
+							</DropdownMenu>
+						</li>
+					</ul>
+				)}
 			</nav>
 		</header>
 	)
