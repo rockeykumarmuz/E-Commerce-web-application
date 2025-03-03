@@ -100,7 +100,9 @@ const Header = () => {
 								</DropdownMenuTrigger>
 								<DropdownMenuContent className='bg-gray-50 w-[80px] h-auto p-2 rounded-md shadow-gray-50 m-2'>
 									{userInfo ? (
-										<DropdownMenuItem className='border-none outline-none hover:cursor-pointer' onClick={handleLogOut}>
+										<DropdownMenuItem
+											className='border-none outline-none hover:cursor-pointer py-1'
+											onClick={handleLogOut}>
 											Logout
 										</DropdownMenuItem>
 									) : (
